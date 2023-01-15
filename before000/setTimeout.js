@@ -13,11 +13,11 @@ setTimeout(() => {
 
 // eg.2
 
-// const handleFunction = () => {
-//   console.log("Jesteś zwycięzcą!");
-// };
+const handleFunction = () => {
+  console.log("Jesteś zwycięzcą!");
+};
 
-// setTimeout(handleFunction, 5000);
+setTimeout(handleFunction, 5000);
 
 // eg.3
 
@@ -25,8 +25,8 @@ setTimeout(() => {
 
 // JAK TO ZASTOPOWAĆ❓
 
-// const timeoutId = setTimeout(() => {
-//   console.log("ja się nie wykonam!");
-// }, 5000);
+const timeoutId = setTimeout(() => {
+  console.log("ja się nie wykonam!");
+}, 5000);
 
-// clearTimeout(timeoutId);
+clearTimeout(timeoutId);

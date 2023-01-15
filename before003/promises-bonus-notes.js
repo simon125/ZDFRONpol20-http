@@ -1,7 +1,7 @@
 /**
  * Jak wygląda i do czego służy Promisa?
  *
- * Promisa to oiekt do obsługi asynchroniczności w JSie
+ * Promisa to obiekt do obsługi asynchroniczności w JSie
  *
  * w aplikacji możemy spotkać różne "sytuacje" które są asynchroniczne
  *
@@ -21,7 +21,7 @@
  *
  **/
 
-new Promise();
+const myPromise = new Promise();
 
 /**
  *
@@ -103,7 +103,15 @@ new Promise(function (resolve, reject) {
       reject();
     }
   }, 1000);
-});
+})
+  .then(() => {
+    // wyświetli  dane na ekranie
+    // poinformować usera ze request się udał
+  })
+  .catch(() => {
+    // wyświetl wiadomość o błedzie
+  })
+  .finally(() => {});
 
 /**
  *
@@ -204,14 +212,17 @@ promisa2
  */
 
 new Promise(function (resolve, reject) {
-  resolve();
+  const wynik = bardzoSkomplikowaneCzasochłonneObliczenie();
+  resolve(wynik);
 })
-  .then(() => {
+  .then((wynik) => {
+    zapiszDoBazyDanych(wynik);
     /**
      * ciało funkcji
      */
+    return formattedUsers;
   })
-  .then(() => {
+  .then((formattedUsers) => {
     /**
      * ciało funkcji
      */

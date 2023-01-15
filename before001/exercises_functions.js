@@ -19,7 +19,7 @@ let results;
  * ciało funckji powinno zawierać następującą logikę
  * jeżeli przekazany parametr ma wartość "todos" przypisz tablice todos (patrz linia 5) do zmiennej results
  * jeżeli przekazany parametr ma wartość "users" przypisz tablice users (patrz linia 11) do zmiennej results
- * przypisanie powinno nastąpić po 2 sekundach
+ * przypisanie powinno nastąpić po 1 sekundach
  *
  * getResults('todos');
  *
@@ -36,6 +36,23 @@ let results;
  * po stworzeniu funkcji wywołaj ją 📢 przetestuj różne parametry
  * 👇🏻 kod napisz pod komentarzem
  */
+
+// function getResults(cokolwiek) {
+//   // dataYouWant 'users'  albo 'todos' albo cokolwiek innego
+//   // stwórz ifa który sprawdza czy dataYouWant jest równy users czy todos
+//   // jeżeli jakiś warunek jest true przypisz te dane do zmiennej results
+
+//   setTimeout(() => {
+//     if (cokolwiek === "users") {
+//       results = users;
+//     }
+
+//     if (cokolwiek === "todos") {
+//       results = todos;
+//     }
+
+//   }, 1000);
+// }
 
 /**
  * part2:
@@ -56,10 +73,23 @@ let results;
  * 👇🏻 kod napisz pod komentarzem
  */
 
+// function displayResultsOnTheScreen() {
+//   // wyświetlenie zmiennej results
+//   console.table(results);
+// }
+
 /**
  * opcja 2 - bardziej reużywalna - clean code - hint💡z parametrem
  * 👇🏻 kod napisz pod komentarzem
  */
+
+const displayResultsOnTheScreen = (resultsToDisplay) => {
+  // wyświetlenie zmiennej results
+  console.table(resultsToDisplay);
+};
+
+// getResults("todos");
+// displayResultsOnTheScreen(results);
 
 /**
  * part3:
@@ -85,9 +115,9 @@ let results;
  * 👇🏻 kod napisz pod komentarzem
  */
 
-getResults("todos");
+// getResults("todos");
 // setTimeout(() => {
-//   displayResultsOnTheScreen();
+//   displayResultsOnTheScreen(results);
 // }, 3000);
 
 /**
@@ -96,8 +126,45 @@ getResults("todos");
  * 👇🏻 kod napisz pod komentarzem
  */
 
+function getResults(cokolwiek) {
+  // dataYouWant 'users'  albo 'todos' albo cokolwiek innego
+  // stwórz ifa który sprawdza czy dataYouWant jest równy users czy todos
+  // jeżeli jakiś warunek jest true przypisz te dane do zmiennej results
+
+  setTimeout(() => {
+    if (cokolwiek === "users") {
+      results = users;
+    }
+
+    if (cokolwiek === "todos") {
+      results = todos;
+    }
+
+    displayResultsOnTheScreen(results);
+  }, 1000);
+}
+
 /**
  * ✅ dobre
  * rozszerzenie funkcji getResults o 2 parametr tzw. callback czyli funkcja którą można przekazać jako parametr
  * 👇🏻 kod napisz pod komentarzem
  */
+
+const displayResultsOnTheScreen3 = (data) => {
+  console.log(data);
+};
+
+function getResults(dataYouWant, callback) {
+  setTimeout(() => {
+    if (dataYouWant === "users") {
+      results = users;
+    }
+
+    if (dataYouWant === "todos") {
+      results = todos;
+    }
+    callback(results);
+  }, 2000);
+}
+
+getResults("users", displayResultsOnTheScreen3);

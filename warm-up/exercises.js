@@ -21,6 +21,30 @@ const users = [
   { id: "gewrrr2", name: "Jerry", age: 24 },
 ];
 
+const usersCopy = users;
+
+// users.map(()=> {
+//   if(users.age < 18) {
+// users.push('isAdult: false')
+//   } else {
+//     users.push('isAdult: true')
+//   }
+// })
+
+const users3 = users.map((element) => {
+  // wersja 1
+  // const isAdult = element.age >= 18 ? true : false;
+  // // const newUser = {...element, isAdult:isAdult };
+  // const newUser = { ...element, isAdult }; // skrótowa wersja
+
+  // wersja 2
+  const newUser = { ...element, isAdult: element.age >= 18 }; // skrótowa wersja
+
+  return newUser;
+});
+
+console.log(users3);
+
 /**
  * poniżej znajduje się oczekiwana tablica userów
  */

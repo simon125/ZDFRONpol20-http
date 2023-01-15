@@ -4,15 +4,15 @@
  * czy wiemy jak korzystać z funkcji setInterval ❓
  */
 
-function getSomeData() {
-  console.log("Robie request do backendu");
-}
+// function getSomeData() {
+//   console.log("Robie request do backendu");
+// }
 
-// eg.1
+// // eg.1
 
-setInterval(() => {
-  getSomeData();
-}, 5000);
+// setInterval(() => {
+//   getSomeData();
+// }, 5000);
 
 // eg.2
 
