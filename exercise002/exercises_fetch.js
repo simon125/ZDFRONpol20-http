@@ -23,8 +23,16 @@
  */
 
 // fetch("https://jsonplaceholder.typicode.com/posts/1/comments")
+//   .then((response) => {
+//     return response.json();
+//   })
+//   .then((data) => {
+//     console.log(data);
+//   });
+
+// fetch("https://jsonplaceholder.typicode.com/posts/1/comments")
 //   .then((response) => response.json())
-//   .then((json) => console.log(json));
+//   .then((json) => console.log(json));`
 
 /**
  * utwórz funkcje getPosts która pobiera posty ze znanego Ci już API https://jsonplaceholder.typicode.com/posts
@@ -43,6 +51,80 @@
  *
  */
 
+// 1)
+// function getPosts(id) {
+//   if(id !== undefined) {
+//     return fetch(`https://jsonplaceholder.typicode.com/posts/${id}`);
+//   } else {
+//     return fetch(`https://jsonplaceholder.typicode.com/posts/`);
+//   }
+// }
+
+// 2
+// function getPosts(id) {
+//   if(id) {
+//     return fetch(`https://jsonplaceholder.typicode.com/posts/${id}`);
+//   } else {
+//     return fetch(`https://jsonplaceholder.typicode.com/posts/`);
+//   }
+// }
+
+// 3a
+// function getPosts(id) {
+//   const finalEndpoint = id
+//     ? `https://jsonplaceholder.typicode.com/posts/${id}`
+//     : `https://jsonplaceholder.typicode.com/posts/`;
+
+//   return fetch(finalEndpoint);
+// }
+
+// 3b
+// const getPosts = (parametr) => {
+//   return parametr
+//     ? fetch(`https://jsonplaceholder.typicode.com/posts/${parametr}`)
+//     : fetch("https://jsonplaceholder.typicode.com/posts");
+// };
+
+// 4
+// function getPosts(id = "") {
+//   return fetch(`https://jsonplaceholder.typicode.com/posts/${id}`);
+// }
+
+// getPosts(20)
+//   .then((response) => {
+//     return response.json();
+//   })
+//   .then((data) => {
+//     console.log(data);
+//   });
+
+// function getPosts1() {
+//   return fetch("https://jsonplaceholder.typicode.com/posts").then((response) =>
+//     response.json()
+//   );
+// }
+
+// getPosts1().then((data) => console.log(data));
+
+// function getPosts2() {
+//   return fetch("https://jsonplaceholder.typicode.com/posts");
+// }
+
+// getPosts2()
+//   .then((response) => response.json())
+//   .then((data) => console.log(data));
+
+// fetch
+// new Promise((resolve, reject) => {
+//   return resolve({ status: 200, ok: true, body: "JSON", json: () => ({}) });
+// })
+//   .then((response) => {
+//     return new Promise((res) => res()); // response.json();
+//   })
+//   .then((zresolvovaneLiczby) => {
+//     console.log(zresolvovaneLiczby);
+//   });
+
 /**
  * jak użyć fetcha do stworzenia rekordu?
  *
@@ -56,8 +138,67 @@ POST
 https://fine-pear-cow-tux.cyclic.app/users
 */
 
+// const postKtoryChcemyStowrzyc = {
+//   userId: 10,
+//   title: "quas fugiat ut perspiciatis vero provident",
+//   body: "eum non blandes qui velit m",
+// };
+
+// fetch("https://jsonplaceholder.typicode.com/posts", {
+//   method: "POST",
+//   headers: {
+//     "Content-Type": "application/json",
+//   },
+//   body: JSON.stringify(postKtoryChcemyStowrzyc),
+// });
+
+const todoNewRecord = {
+  userId: 50,
+  title: "Jakiś tam todos",
+  completed: "false",
+};
+
+function createTodo() {
+  showSpinner();
+  return fetch("https://jsonplaceholder.typicode.com/todos2124234", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(todoNewRecord),
+  }).then((response) => {
+    if (response.ok === true) {
+      return response.json();
+    } else {
+      throw new Error("");
+    }
+  });
+}
+// przykłąd walidacji inputów/parametrów często spotykany w bibliotekach
+// const addTwoNumbers = (a, b) => {
+//   if (typeof a !== "number" || typeof b !== "number") {
+//     throw new Error("Podaj liczby!!!");
+//   }
+
+//   return a + b;
+// };
+
+// addTwoNumbers("test", "wehiuwehr"); // "testwehiuwehr"
+
+// createTodo()
+//   .then(() => {
+//     showToast("Udało się stworzyć rekord");
+//   })
+//   .catch((err) => {
+//     console.error(err);
+//     showToast("Coś poszło nie tak");
+//   })
+//   .finally(() => {
+//     hideSpinner();
+//   });
+
 /**
- * utwórz funkcje createPost która służy do swtorzenia postu w tym celu
+ * utwórz funkcje createTodo która służy do swtorzenia postu w tym celu
  * będziesz musiał użyć zapytania typu POST oraz przekazać parametry do stworzenia postu
  * zerknijcie do dokumentacji jak to dokładnie zrobić
  * do wykonania zadania użyj nowo poznanej funkcji fetch
@@ -79,12 +220,46 @@ https://fine-pear-cow-tux.cyclic.app/users
  *
  */
 
+const createBlogPost = (newBlogPost) => {
+  return fetch("https://jsonplaceholder.typicode.com/posts", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(newBlogPost),
+  }).then((response) => {
+    if (response.ok) {
+      return response.json();
+    } else {
+      throw new Error("Coś poszło nie tak!");
+    }
+  });
+};
+
 document.querySelector("#createPost").addEventListener("submit", (e) => {
   e.preventDefault();
   const cleanFormFields = () => e.target.reset();
   const formData = new FormData(e.target);
 
-  console.log(formData);
+  const title = formData.get("title");
+  const content = formData.get("content");
+  const userId = formData.get("userSelect");
+
+  // const postToCreate = { title, content, userId };
+  const postToCreate = { title: title, content: content, userId: userId };
+
+  showSpinner();
+
+  createBlogPost(postToCreate)
+    .then(() => {
+      showToast("Udało Ci się");
+    })
+    .catch(() => {
+      showToast("Coś poszło nie tak");
+    })
+    .finally(() => {
+      hideSpinner();
+    });
 
   cleanFormFields();
 });
@@ -101,20 +276,20 @@ document.querySelector("#createPost").addEventListener("submit", (e) => {
  *
  */
 
-document.querySelector("#createPost").addEventListener("submit", (e) => {
-  e.preventDefault();
-  const cleanFormFields = () => e.target.reset();
-  const formData = new FormData(e.target);
-  const formProps = Object.fromEntries(formData);
-  console.log(formProps);
+// document.querySelector("#createPost").addEventListener("submit", (e) => {
+//   e.preventDefault();
+//   const cleanFormFields = () => e.target.reset();
+//   const formData = new FormData(e.target);
+//   const formProps = Object.fromEntries(formData);
+//   console.log(formProps);
 
-  /**
-   * Miejsce na twój kod
-   *
-   *
-   *
-   */
-});
+//   /**
+//    * Miejsce na twój kod
+//    *
+//    *
+//    *
+//    */
+// });
 
 /**
  *
@@ -130,18 +305,18 @@ document.querySelector("#createPost").addEventListener("submit", (e) => {
  *
  */
 
-document.querySelector("#createPost").addEventListener("submit", (e) => {
-  e.preventDefault();
-  const cleanFormFields = () => e.target.reset();
-  processData(e).then((d) => console.log(d));
+// document.querySelector("#createPost").addEventListener("submit", (e) => {
+//   e.preventDefault();
+//   const cleanFormFields = () => e.target.reset();
+//   processData(e).then((d) => console.log(d));
 
-  /**
-   * Miejsce na twój kod
-   *
-   *
-   *
-   */
-});
+//   /**
+//    * Miejsce na twój kod
+//    *
+//    *
+//    *
+//    */
+// });
 
 /**
  *
@@ -155,14 +330,46 @@ document.querySelector("#createPost").addEventListener("submit", (e) => {
  *
  * onDeleteClick(() => console.log('cześć'));
  *
- * hint 💡 do wykonania tego zadania będziesz musiał/ała stworzyć request DELETE po taki
- * https://jsonplaceholder.typicode.com/posts/:postId URL gdzie postId jest dynamiczny i ma być przekazywny
+ * hint 💡 do wykonania tego zadania będziesz musiał/ała stworzyć request DELETE pod taki
+ * https://jsonplaceholder.typicode.com/posts/:id URL gdzie postId jest dynamiczny i ma być przekazywny
  * przez parametr
  *
+ * hint 1💡 do obiektu konfiguracyjnego dodaj tylko klucz method: 'DELETE'
+ * bez headers i body jak to miało miesjce w requestcie typu POST|PATCH|PUT
+ *
+ * showToast();
+ * showSpinner();
+ * hideSpinner();
  *
  */
 
+const removePost = (id) => {
+  return fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
+    method: "DELETE", // post delete patch
+  }).then((response) => {
+    if (response.ok === true) {
+      return response.json();
+    } else {
+      throw new Error();
+    }
+  });
+};
+
 onDeleteClick((id) => {
+  /**
+   * MIEJSCE NA WASZ KOD
+   */
+
+  showSpinner();
+  removePost(id)
+    .then(() => {
+      showToast("Udało się usunąć rekord");
+    })
+    .catch(() => {
+      showToast("Coś poszło nie tak, spróbuj później");
+    })
+    .finally(hideSpinner);
+
   console.log(id);
 });
 

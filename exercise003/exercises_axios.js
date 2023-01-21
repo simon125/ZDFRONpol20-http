@@ -27,6 +27,37 @@
  *
  */
 
+// fetch("https://jsonplaceholder.typicode.com/posts/1/comments")
+//   .then((response) => {
+//     if(response.ok){
+//       return response.json();
+//     }
+
+//   })
+//   .then((data) => {
+//     console.log(data);
+//   }).catch(function (error) {
+//     // handle error
+//     console.log(error);
+//   }).finally(()=>{
+
+//   });
+
+// axios
+//   .get("https://jsonplaceholder.typicode.com/posts/347r943j9834j298")
+//   .then(function (response) {
+//     // handle success
+//     console.log(response);
+//     console.log(response.data);
+//   })
+//   .catch(function (error) {
+//     // handle error
+//     console.log(error);
+//   })
+//   .finally(() => {
+//     console.log("skończyłem");
+//   });
+
 // const editBlogPost = (id, updatedBlogPost) => {
 //   return fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
 //     method: "PUT",
@@ -37,8 +68,11 @@
 //   });
 // };
 
-// axios.post('https://jsonplaceholder.typicode.com/posts').then((response)=>{
-
+// axios.post('https://jsonplaceholder.typicode.com/posts',{
+//   firstName: 'Fred',
+//   lastName: 'Flintstone'
+// }).then((response)=>{
+// return response.josn()
 // })
 
 // axios.delte('https://jsonplaceholder.typicode.com/posts').then((response)=>{
@@ -52,17 +86,6 @@
 // axios.put('https://jsonplaceholder.typicode.com/posts').then((response)=>{
 
 // })
-
-// axios
-//   .get("/user?ID=12345")
-//   .then(function (response) {
-//     // handle success
-//     console.log(response);
-//   })
-//   .catch(function (error) {
-//     // handle error
-//     console.log(error);
-//   });
 
 /**
  * utwórz funkcje getPosts która pobiera posty ze znanego Ci już API https://jsonplaceholder.typicode.com/posts
@@ -81,20 +104,6 @@
  *
  */
 
-document.querySelector("#createPost").addEventListener("submit", (e) => {
-  e.preventDefault();
-  const formData = new FormData(e.target);
-  const formProps = Object.fromEntries(formData);
-  const cleanFormFields = () => e.target.reset();
-
-  /**
-   * Miejsce na twój kod
-   *
-   *
-   *
-   */
-});
-
 /**
  * utwórz funkcje createPost która służy do swtorzenia postu w tym celu
  * będziesz musiał użyć zapytania typu POST oraz przekazać parametry do stworzenia postu
@@ -108,6 +117,44 @@ document.querySelector("#createPost").addEventListener("submit", (e) => {
  * czym są dane mockowe ❓❓❓
  *
  */
+
+const createPost = (newPost) => {
+  return axios.post("https://jsonplaceholder.typicode.com/posts/", newPost);
+};
+
+document.querySelector("#createPost").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const formData = new FormData(e.target);
+  // const formProps = Object.fromEntries(formData);
+  const cleanFormFields = () => e.target.reset();
+
+  const title = formData.get("title");
+  const content = formData.get("content");
+  const userId = formData.get("userSelect");
+
+  // const postToCreate = { title, content, userId };
+  const postToCreate = { title: title, content: content, userId: userId };
+
+  showSpinner();
+  createPost(postToCreate)
+    .then(() => {
+      showToast("Dodałeś nowy post");
+    })
+    .catch(() => {
+      showToast("Coś poszło nie tak");
+    })
+    .finally(() => {
+      hideSpinner();
+      cleanFormFields();
+    });
+
+  /**
+   * Miejsce na twój kod
+   *
+   *
+   *
+   */
+});
 
 // document.querySelector("#createPost").addEventListener("submit", (e) => {
 //   e.preventDefault();
